@@ -15,7 +15,7 @@ extern "C"
 					for(int kb = 0;kb < N/M;kb++){
 						for(int k=0;k<M;k++){
 							
-							for(int ii=0;ii <M/DSIZE;i++){ // M size의 배열이 필요하기에 m/DSIZE만큼 반복
+							for(int ii=0;ii <M/DSIZE;ii++){ // M size의 배열이 필요하기에 m/DSIZE만큼 반복
 								hls::vector<DTYPE, DSIZE> A_temp = AStreamWide.read();
 								for(int i=0;i<DSIZE;i++){
 									AStream.write(A_temp[i]);
