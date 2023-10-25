@@ -28,7 +28,7 @@ extern "C"
 			}
 		}
 
-	void ReadAt(DTYPE *At, hls::stream<hls::vector<DTYPE, DSIZE>> & AStreamWide, int M){
+	void ReadAt(DTYPE *At, hls::stream<hls::vector<DTYPE, DSIZE>> & AStreamWide, int N){
 		for(int kb=0;kb<N/M;kb++){ // 오른쪽 블럭 column 이동
 			for(int jb=0;jb<N/M;jb++){ // dup
 				for(int ib=0;ib< N/M; ib++){ // 블럭 아래로 하나씩 
@@ -43,7 +43,7 @@ extern "C"
 		}
 	}
 
-	void ReadB(hls::vector<DTYPE, DSIZE> *B, hls::stream<hls::vector<DTYPE, DSIZE>> & BStream, int M){
+	void ReadB(hls::vector<DTYPE, DSIZE> *B, hls::stream<hls::vector<DTYPE, DSIZE>> & BStream, int N){
 		for(int ib=0;ib<N/M;ib++){ // 반복
 			for(int jb=0;jb<N/M;jb++){ // 오른쪽으로 이동
 				for(int kb=0;kb<N/M;kb++){ // 아래로 이동 (블록)
@@ -58,7 +58,7 @@ extern "C"
 		}
 	}
 
-	void Comp(hls::stream<DTYPE> & AStream, hls::stream<hls::vector<DTYPE, DSIZE>> & BStream, hls::stream<hls::vector<DTYPE, DSIZE>> & ABStream, int M){
+	void Comp(hls::stream<DTYPE> & AStream, hls::stream<hls::vector<DTYPE, DSIZE>> & BStream, hls::stream<hls::vector<DTYPE, DSIZE>> & ABStream, int N){
 		for(int ib=0;ib < N/M;ib++){
 			for(int jb=0;jb <N/M;jb++){
 				for(int kb=0;kb< N/M;kb++){
@@ -78,7 +78,7 @@ extern "C"
 		}
 	}
 
-	void WriteAB(hls::stream<hls::vector<DTYPE, DSIZE>> & ABStream, hls::vector<DTYPE, DSIZE> *AB, int M){
+	void WriteAB(hls::stream<hls::vector<DTYPE, DSIZE>> & ABStream, hls::vector<DTYPE, DSIZE> *AB, int N){
 		for(int ib=0;ib<N/M;ib++){
 			for(int jb=0;jb<N/M;jb++){
 				for(int kb=0;kb<N/M;kb++){
@@ -107,11 +107,11 @@ extern "C"
 	hls::stream<hls::vector<DTYPE, DSIZE> > BStream("BStream");
 	hls::stream<hls::vector<DTYPE, DSIZE> > ABStream("ABStream");
 
-	ReadAt(At, AStreamWide, M);
-	ChangeA_Rate(AStreamWide, AStream, M);
-	ReadB(B, BStream, M);
-	Comp(AStream, BStream, ABStream, M);
-	WriteAB(ABStream, AB, M);
+	ReadAt(At, AStreamWide, N);
+	ChangeA_Rate(AStreamWide, AStream, N);
+	ReadB(B, BStream, N);
+	Comp(AStream, BStream, ABStream, N);
+	WriteAB(ABStream, AB, N);
 	}
 
 
