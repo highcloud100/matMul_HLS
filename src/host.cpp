@@ -24,8 +24,8 @@
 
 #include "mm.h"
 
-//const int SIZE = 512;
-const int SIZE = 2048;
+const int SIZE = 512;
+//const int SIZE = 2048;
 
 void mm_sw( std::vector<DTYPE, aligned_allocator<DTYPE> > A, std::vector<DTYPE, aligned_allocator<DTYPE> > B, std::vector<DTYPE, aligned_allocator<DTYPE> > & AB){
 //void mm_sw( std::vector<DTYPE, aligned_allocator<DTYPE> > At, std::vector<DTYPE, aligned_allocator<DTYPE> > B, std::vector<DTYPE, aligned_allocator<DTYPE> > & AB){
