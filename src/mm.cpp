@@ -89,7 +89,7 @@ extern "C"
 						for (int j = 0; j < DSIZE; j++)
 						{ // block에서 배열 하나를 읽어 AB_temp에 저장
 #pragma HLS unroll
-							AB_temp[j] = AB_block[jj * DSIZE + j];
+							AB_temp[j] = AB_block[i][jj * DSIZE + j];
 						}
 						AB[((ib * M + i) * N + jb * M) / DSIZE + jj] = AB_temp; // 외부로 AB_temp를 쓰기
 					}
