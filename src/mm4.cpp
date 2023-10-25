@@ -2,6 +2,7 @@
 #include "hls_stream.h"
 #include "ap_int.h"
 #include "mm.h"
+#include "hls_print.h"
 
 const int DSIZE = 64 / sizeof(DTYPE);
 
@@ -26,11 +27,12 @@ extern "C"
 					}
 				}
 			}
+			 hls::print("changeA_rate\n");
 		}
 
 	void ReadAt(DTYPE *At, hls::stream<hls::vector<DTYPE, DSIZE>> & AStreamWide, int N){
 		for(int kb=0;kb<N/M;kb++){ // 오른쪽 블럭 column 이동
-			for(int jb=0;jb<N/M;jb++){ // dup
+			//for(int jb=0;jb<N/M;jb++){ // dup
 				for(int ib=0;ib< N/M; ib++){ // 블럭 아래로 하나씩 
 					for(int i=0;i<M;i++){ // 블럭 내에서 아래로 이동
 						for(int k=0;k<M/DSIZE;k++){ // 블럭 내에서 한줄 읽기
@@ -38,9 +40,10 @@ extern "C"
 						}
 					}
 				}
-			}
+			//}
 			
 		}
+		 hls::print("ReadAt\n");
 	}
 
 	void ReadB(hls::vector<DTYPE, DSIZE> *B, hls::stream<hls::vector<DTYPE, DSIZE>> & BStream, int N){
@@ -56,6 +59,7 @@ extern "C"
 			}
 			
 		}
+		 hls::print("ReadB\n");
 	}
 
 	void Comp(hls::stream<DTYPE> & AStream, hls::stream<hls::vector<DTYPE, DSIZE>> & BStream, hls::stream<hls::vector<DTYPE, DSIZE>> & ABStream, int N){
@@ -76,6 +80,7 @@ extern "C"
 				}
 			}
 		}
+		 hls::print("Comp\n");
 	}
 
 	void WriteAB(hls::stream<hls::vector<DTYPE, DSIZE>> & ABStream, hls::vector<DTYPE, DSIZE> *AB, int N){
@@ -94,6 +99,7 @@ extern "C"
 				}
 			}
 		}
+		 hls::print("writeAB\n");
 	}
 
 	void mm(DTYPE *At, hls::vector<DTYPE, DSIZE> *B, hls::vector<DTYPE, DSIZE> *AB, int N)
