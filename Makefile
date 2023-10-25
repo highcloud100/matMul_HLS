@@ -133,7 +133,7 @@ build: check-vitis check-device $(BINARY_CONTAINERS)
 xclbin: build
 
 ############################## Setting Rules for Binary Containers (Building Kernels) ##############################
-$(TEMP_DIR)/mm.xo: src/mm.cpp
+$(TEMP_DIR)/mm.xo: src/mm2.cpp
 	mkdir -p $(TEMP_DIR)
 	$(VPP) $(VPP_FLAGS) -c -k mm --temp_dir $(TEMP_DIR)  -I'$(<D)' -o'$@' '$<'
 $(BUILD_DIR)/mm.xclbin: $(BINARY_CONTAINER_mm_OBJS)
