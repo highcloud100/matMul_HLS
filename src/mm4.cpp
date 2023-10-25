@@ -34,7 +34,7 @@ extern "C"
 				for(int ib=0;ib< N/M; ib++){ // 블럭 아래로 하나씩 
 					for(int i=0;i<M;i++){ // 블럭 내에서 아래로 이동
 						for(int k=0;k<M/DSIZE;k++){ // 블럭 내에서 한줄 읽기
-							AstreamWide.write(At[((ib*M+i)*N + kb*M)/DSIZE + k]);
+							AStreamWide.write(At[((ib*M+i)*N + kb*M)/DSIZE + k]);
 						}
 					}
 				}
@@ -98,7 +98,7 @@ extern "C"
 
 	void mm(DTYPE *At, hls::vector<DTYPE, DSIZE> *B, hls::vector<DTYPE, DSIZE> *AB, int N)
 	{
-#pragma HLS INTERFACE mode = m_axi bundle = m0 port = A
+#pragma HLS INTERFACE mode = m_axi bundle = m0 port = At
 #pragma HLS INTERFACE mode = m_axi bundle = m1 port = B
 #pragma HLS INTERFACE mode = m_axi bundle = m1 port = AB
 
