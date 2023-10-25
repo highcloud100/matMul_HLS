@@ -34,7 +34,7 @@ extern "C"
 
 	void ReadAt(DTYPE *At, hls::stream<hls::vector<DTYPE, DSIZE>> & AStreamWide, int N){
 		for(int kb=0;kb<N/M;kb++){ // 오른쪽 블럭 column 이동
-			//for(int jb=0;jb<N/M;jb++){ // dup
+			for(int jb=0;jb<N/M;jb++){ // dup
 				for(int ib=0;ib< N/M; ib++){ // 블럭 아래로 하나씩 
 					for(int i=0;i<M;i++){ // 블럭 내에서 아래로 이동
 						for(int k=0;k<M/DSIZE;k++){ // 블럭 내에서 한줄 읽기
@@ -43,7 +43,7 @@ extern "C"
 						}
 					}
 				}
-			//}
+			}
 			
 		}
 		 hls::print("ReadAt\n");
