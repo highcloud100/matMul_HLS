@@ -24,3 +24,4 @@ void mm(DTYPE *A,  DTYPE *B, DTYPE *AB,   int N )
     }
 
 }
+}
