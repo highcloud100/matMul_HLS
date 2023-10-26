@@ -89,7 +89,7 @@ extern "C"
 	void WriteAB(hls::stream<hls::vector<DTYPE, DSIZE>> & ABStream, hls::vector<DTYPE, DSIZE> *AB, int N){
 		for(int ib=0;ib<N/M;ib++){
 			for(int jb=0;jb<N/M;jb++){
-				//for(int kb=0;kb<N/M;kb++){
+				for(int kb=0;kb<N/M;kb++){
 					for(int k=0;k<M;k++){
 						for(int i=0;i<M;i++){
 							
@@ -100,7 +100,7 @@ extern "C"
 							
 						}
 					}
-				//}
+				}
 			}
 		}
 		 hls::print("writeAB end\n");
