@@ -92,12 +92,12 @@ int main(int argc, char** argv) {
 	} 	
 	printf("Done initializing vectors\n");
 
-	for(int i=0;i<1;i++){
-		for(int j=0;j<SIZE;j++){
-			printf("%d ", At[i*SIZE+j]);
-		}
-		printf("\n");
-	}
+	// for(int i=0;i<1;i++){
+	// 	for(int j=0;j<SIZE;j++){
+	// 		printf("%d ", At[i*SIZE+j]);
+	// 	}
+	// 	printf("\n");
+	// }
 
 	std::cout << "Running SW MM...\n";
 	mm_sw(At, B, AB_sw);
