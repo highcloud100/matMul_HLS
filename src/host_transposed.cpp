@@ -89,12 +89,12 @@ int main(int argc, char** argv) {
 				AB_sw[i*SIZE+j] = 0;
 				AB_hw[i*SIZE+j] = 0;
 		}
-	}
+	} 	
 	printf("Done initializing vectors\n");
 
 	for(int i=0;i<SIZE;i++){
 		for(int j=0;j<SIZE;j++){
-			printf(At[i*SIZE+j] + " ");
+			printf("%d ", At[i*SIZE+j]);
 		}
 		printf("\n");
 	}

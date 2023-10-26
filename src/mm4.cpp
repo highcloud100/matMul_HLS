@@ -22,9 +22,9 @@ extern "C"
 								for(int i=0;i<DSIZE;i++){
 									///	hls::print("changeA_rate : AStream writing\n");
 									AStream.write(A_temp[i]);
-									hls::print("AStream : %d ", A_temp[i]);
+									hls::print("AStream : %d\n", A_temp[i]);
 								}
-								hls::print("\n");
+								hls::print("--------------------\n");
 							}
 
 					}
