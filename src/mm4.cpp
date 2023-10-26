@@ -22,9 +22,9 @@ extern "C"
 								for(int i=0;i<DSIZE;i++){
 									///	hls::print("changeA_rate : AStream writing\n");
 									AStream.write(A_temp[i]);
-									hls::print("AStream : %d\n", A_temp[i]);
+									//hls::print("AStream : %d\n", A_temp[i]);
 								}
-								hls::print("--------------------\n");
+								//hls::print("--------------------\n");
 							}
 
 					}
@@ -89,7 +89,7 @@ extern "C"
 	void WriteAB(hls::stream<hls::vector<DTYPE, DSIZE>> & ABStream, hls::vector<DTYPE, DSIZE> *AB, int N){
 		for(int ib=0;ib<N/M;ib++){
 			for(int jb=0;jb<N/M;jb++){
-				for(int kb=0;kb<N/M;kb++){
+				//for(int kb=0;kb<N/M;kb++){
 					for(int k=0;k<M;k++){
 						for(int i=0;i<M;i++){
 							
@@ -100,7 +100,7 @@ extern "C"
 							
 						}
 					}
-				}
+				//}
 			}
 		}
 		 hls::print("writeAB end\n");
