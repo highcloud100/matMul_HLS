@@ -104,8 +104,8 @@ ifneq ($(TARGET), hw)
 	VPP_FLAGS += -g
 endif
 
-VPP_FLAGS += --connectivity.sp mm_1.A:DDR[0]
-#VPP_FLAGS += --connectivity.sp mm_1.At:DDR[0]
+#VPP_FLAGS += --connectivity.sp mm_1.A:DDR[0]
+VPP_FLAGS += --connectivity.sp mm_1.At:DDR[0]
 VPP_FLAGS += --connectivity.sp mm_1.B:DDR[1]
 VPP_FLAGS += --connectivity.sp mm_1.AB:DDR[1]
 
