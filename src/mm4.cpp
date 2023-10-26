@@ -96,17 +96,15 @@ extern "C"
 	}
 
 	void WriteAB(hls::stream<hls::vector<DTYPE, DSIZE>> & ABStream, hls::vector<DTYPE, DSIZE> *AB, int N){
-		for(int ib=0;ib<N/M;ib++){
-			for(int jb=0;jb<N/M;jb++){
-				for(int kb=0;kb<N/M;kb++){
-					for(int k=0;k<M;k++){
+		for(int ib=0;ib<N/M;ib++){ // block 세로 이동
+			for(int jb=0;jb<N/M;jb++){ // block 가로 이동
+				for(int kb=0;kb<N/M;kb++){ // cumulate
+					for(int k=0;k<M;k++){ // 
 						for(int i=0;i<M;i++){
-							
-							
-							//hls::print("writeAB : ABStream reading\n");
-							AB[((ib*M+i)*N+jb*M)/DSIZE] += ABStream.read();
-							
-							
+							for(int jj=0;jj<M/DSIZE;jj++){
+								//hls::print("writeAB : ABStream reading\n");
+								AB[((ib*M+i)*N+jb*M)/DSIZE+jj] += ABStream.read();
+							}
 						}
 					}
 				}
