@@ -34,7 +34,7 @@ extern "C"
 			 hls::print("changeA_rate end\n");
 		}
 
-	void ReadAt(DTYPE *At, hls::stream<hls::vector<DTYPE, DSIZE>> & AStreamWide, int N){
+	void ReadAt( hls::vector<DTYPE, DSIZE> *At, hls::stream<hls::vector<DTYPE, DSIZE>> & AStreamWide, int N){
 		for(int kb=0;kb<N/M;kb++){ // 오른쪽 블럭 column 이동
 			for(int jb=0;jb<N/M;jb++){ // dup
 				for(int ib=0;ib< N/M; ib++){ // 블럭 아래로 하나씩 
@@ -106,7 +106,7 @@ extern "C"
 		 hls::print("writeAB end\n");
 	}
 
-	void mm(DTYPE *At, hls::vector<DTYPE, DSIZE> *B, hls::vector<DTYPE, DSIZE> *AB, int N)
+	void mm( hls::vector<DTYPE, DSIZE> *At, hls::vector<DTYPE, DSIZE> *B, hls::vector<DTYPE, DSIZE> *AB, int N)
 	{
 #pragma HLS INTERFACE mode = m_axi bundle = m0 port = At
 #pragma HLS INTERFACE mode = m_axi bundle = m1 port = B
