@@ -71,17 +71,11 @@ extern "C"
 			for(int jb=0;jb <N/M;jb++){
 				for(int kb=0;kb< N/M;kb++){
 					for(int k=0;k<M;k++){
+						// read Bj
+						auto temp = BStream.read();
 						for(int i=0;i<M;i++){
-							hls::print("Comp : AStream reading\n");
 							DTYPE Ai = AStream.read();
-							for(int jj=0;jj<M/DSIZE;jj++){
-									hls::print("Comp : BStream reading\n");
-								hls::vector<DTYPE, DSIZE> B_temp = BStream.read();
-								for(int j=0;j<DSIZE;j++){
-										hls::print("Comp : ABStream writing\n");
-									ABStream.write(Ai*B_temp[j]);
-								}
-							}
+							ABStream.write(temp*Ai);
 						}
 					}
 				}
@@ -97,10 +91,10 @@ extern "C"
 					for(int k=0;k<M;k++){
 						for(int i=0;i<M;i++){
 							
-							for(int j=0;j<DSIZE;j++){
-									hls::print("writeAB : ABStream reading\n");
-								AB[((ib*M+i)*N+jb*M)/DSIZE + j] = ABStream.read();
-							}
+							
+							hls::print("writeAB : ABStream reading\n");
+							AB[((ib*M+i)*N+jb*M)/DSIZE] += ABStream.read();
+							
 							
 						}
 					}
