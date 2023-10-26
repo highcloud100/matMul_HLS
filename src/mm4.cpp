@@ -17,14 +17,10 @@ extern "C"
 						for(int k=0;k<M;k++){
 							
 							for(int ii=0;ii <M/DSIZE;ii++){ // M size의 배열이 필요하기에 m/DSIZE만큼 반복
-							// hls::print("changeA_rate : AStreamWide reading\n");
 								hls::vector<DTYPE, DSIZE> A_temp = AStreamWide.read();
 								for(int i=0;i<DSIZE;i++){
-									///	hls::print("changeA_rate : AStream writing\n");
 									AStream.write(A_temp[i]);
-									//hls::print("AStream : %d\n", A_temp[i]);
 								}
-								//hls::print("--------------------\n");
 							}
 
 					}
@@ -40,7 +36,6 @@ extern "C"
 				for(int ib=0;ib< N/M; ib++){ // 블럭 아래로 하나씩 
 					for(int i=0;i<M;i++){ // 블럭 내에서 아래로 이동
 						for(int k=0;k<M/DSIZE;k++){ // 블럭 내에서 한줄 읽기
-							//hls::print("ReadAt : AStreamWide writing\n");
 							AStreamWide.write(At[((ib*M+i)*N + kb*M)/DSIZE + k]);
 						}
 					}
@@ -57,7 +52,6 @@ extern "C"
 				for(int kb=0;kb<N/M;kb++){ // 아래로 이동 (블록)
 					for(int k=0;k<M;k++){ // 블록 내에서 아래로 이동 (행)
 						for(int jj=0;jj<M/DSIZE;jj++){ // 블록 내에서 한줄 읽기
-						 //	hls::print("ReadB : BStream writing\n");
 							BStream.write(B[((kb*M+k)*N+jb*M)/DSIZE+jj]);
 						}
 					}
@@ -75,7 +69,6 @@ extern "C"
 					for(int k=0;k<M;k++){
 						hls::vector<hls::vector<DTYPE, DSIZE>, M/DSIZE> Bj;
 						for(int jj=0;jj<M/DSIZE;jj++){
-							//hls::print("Comp : BStream reading\n");
 							Bj[jj] = BStream.read();
 						}
 
@@ -102,7 +95,6 @@ extern "C"
 					for(int k=0;k<M;k++){ // 
 						for(int i=0;i<M;i++){
 							for(int jj=0;jj<M/DSIZE;jj++){
-								//hls::print("writeAB : ABStream reading\n");
 								AB[((ib*M+i)*N+jb*M)/DSIZE+jj] += ABStream.read();
 							}
 						}
