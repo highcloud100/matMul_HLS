@@ -75,6 +75,9 @@ extern "C"
 					for(int k=0;k<M;k++){
 						// read Bj
 						auto temp = BStream.read();
+						hls::print(type(temp));
+						hls::print(temp[0]);
+						hls::print(temp[1]);
 						for(int i=0;i<M;i++){
 							DTYPE Ai = AStream.read();
 							ABStream.write(temp*Ai);
