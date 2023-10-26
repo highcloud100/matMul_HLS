@@ -39,7 +39,6 @@ extern "C"
 			for(int jb=0;jb<N/M;jb++){ // dup
 				for(int ib=0;ib< N/M; ib++){ // 블럭 아래로 하나씩 
 					for(int i=0;i<M;i++){ // 블럭 내에서 아래로 이동
-						hls::print("%d ",At[((ib*M+i)*N + kb*M)/DSIZE]);
 						for(int k=0;k<M/DSIZE;k++){ // 블럭 내에서 한줄 읽기
 							//hls::print("ReadAt : AStreamWide writing\n");
 							AStreamWide.write(At[((ib*M+i)*N + kb*M)/DSIZE + k]);
