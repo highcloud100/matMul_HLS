@@ -73,10 +73,10 @@ extern "C"
 			for(int jb=0;jb <N/M;jb++){
 				for(int kb=0;kb< N/M;kb++){
 					for(int k=0;k<M;k++){
-						hls::vector<hls::vector<DTYPE, DSIZE>> Bj;
-						for(int jj=0;j<M/DSIZE;jj++){
+						hls::vector<hls::vector<DTYPE, DSIZE>, M/DSIZE> Bj;
+						for(int jj=0;jj<M/DSIZE;jj++){
 							//hls::print("Comp : BStream reading\n");
-							Bj[jj].push_back(BStream.read());
+							Bj[jj] = BStream.read();
 						}
 
 						for(int i=0;i<M;i++){
