@@ -17,19 +17,21 @@ extern "C"
 						for(int k=0;k<M;k++){
 							
 							for(int ii=0;ii <M/DSIZE;ii++){ // M size의 배열이 필요하기에 m/DSIZE만큼 반복
-							 hls::print("changeA_rate : AStreamWide reading\n");
+							// hls::print("changeA_rate : AStreamWide reading\n");
 								hls::vector<DTYPE, DSIZE> A_temp = AStreamWide.read();
 								for(int i=0;i<DSIZE;i++){
-										hls::print("changeA_rate : AStream writing\n");
+									///	hls::print("changeA_rate : AStream writing\n");
 									AStream.write(A_temp[i]);
+									hls::print("AStream : %d ", A_temp[i]);
 								}
+								hls::print("\n");
 							}
 
-						}
+					}
 					}
 				}
 			}
-			 hls::print("changeA_rate\n");
+			 hls::print("changeA_rate end\n");
 		}
 
 	void ReadAt(DTYPE *At, hls::stream<hls::vector<DTYPE, DSIZE>> & AStreamWide, int N){
@@ -38,7 +40,7 @@ extern "C"
 				for(int ib=0;ib< N/M; ib++){ // 블럭 아래로 하나씩 
 					for(int i=0;i<M;i++){ // 블럭 내에서 아래로 이동
 						for(int k=0;k<M/DSIZE;k++){ // 블럭 내에서 한줄 읽기
-							hls::print("ReadAt : AStreamWide writing\n");
+							//hls::print("ReadAt : AStreamWide writing\n");
 							AStreamWide.write(At[((ib*M+i)*N + kb*M)/DSIZE + k]);
 						}
 					}
@@ -46,7 +48,7 @@ extern "C"
 			}
 			
 		}
-		 hls::print("ReadAt\n");
+		 hls::print("ReadAt end\n");
 	}
 
 	void ReadB(hls::vector<DTYPE, DSIZE> *B, hls::stream<hls::vector<DTYPE, DSIZE>> & BStream, int N){
@@ -55,7 +57,7 @@ extern "C"
 				for(int kb=0;kb<N/M;kb++){ // 아래로 이동 (블록)
 					for(int k=0;k<M;k++){ // 블록 내에서 아래로 이동 (행)
 						for(int jj=0;jj<M/DSIZE;jj++){ // 블록 내에서 한줄 읽기
-						 	hls::print("ReadB : BStream writing\n");
+						 //	hls::print("ReadB : BStream writing\n");
 							BStream.write(B[((kb*M+k)*N+jb*M)/DSIZE+jj]);
 						}
 					}
@@ -81,7 +83,7 @@ extern "C"
 				}
 			}
 		}
-		 hls::print("Comp\n");
+		 hls::print("Comp end\n");
 	}
 
 	void WriteAB(hls::stream<hls::vector<DTYPE, DSIZE>> & ABStream, hls::vector<DTYPE, DSIZE> *AB, int N){
@@ -92,7 +94,7 @@ extern "C"
 						for(int i=0;i<M;i++){
 							
 							
-							hls::print("writeAB : ABStream reading\n");
+							//hls::print("writeAB : ABStream reading\n");
 							AB[((ib*M+i)*N+jb*M)/DSIZE] += ABStream.read();
 							
 							
@@ -101,7 +103,7 @@ extern "C"
 				}
 			}
 		}
-		 hls::print("writeAB\n");
+		 hls::print("writeAB end\n");
 	}
 
 	void mm(DTYPE *At, hls::vector<DTYPE, DSIZE> *B, hls::vector<DTYPE, DSIZE> *AB, int N)
@@ -119,9 +121,9 @@ extern "C"
 
 	ReadAt(At, AStreamWide, N);
 	ChangeA_Rate(AStreamWide, AStream, N);
-	ReadB(B, BStream, N);
-	Comp(AStream, BStream, ABStream, N);
-	WriteAB(ABStream, AB, N);
+	//ReadB(B, BStream, N);
+	//Comp(AStream, BStream, ABStream, N);
+	//WriteAB(ABStream, AB, N);
 	}
 
 

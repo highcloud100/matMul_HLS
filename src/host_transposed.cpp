@@ -92,6 +92,13 @@ int main(int argc, char** argv) {
 	}
 	printf("Done initializing vectors\n");
 
+	for(int i=0;i<i<SIZE;i++){
+		for(int j=0;j<SIZE;j++){
+			printf(At[i*SIZE+j] + " ");
+		}
+		printf("\n");
+	}
+
 	std::cout << "Running SW MM...\n";
 	mm_sw(At, B, AB_sw);
 	printf("Done\n");
