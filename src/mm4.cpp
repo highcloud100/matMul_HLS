@@ -128,6 +128,7 @@ extern "C"
 	hls::stream<hls::vector<DTYPE, DSIZE> > BStream("BStream");
 	hls::stream<hls::vector<DTYPE, DSIZE> > ABStream("ABStream");
 
+	hls::print("mm start\n");
 	ReadAt(At, AStreamWide, N);
 	ChangeA_Rate(AStreamWide, AStream, N);
 	ReadB(B, BStream, N);
