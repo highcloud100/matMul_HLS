@@ -121,7 +121,7 @@ extern "C"
 						for(int i=0;i<M;i++){
 							for(int jj=0;jj<M/DSIZE;jj++){ // 여기서는 write만
 								AB[((ib*M+i)*N+jb*M)/DSIZE+jj] = ABStream.read();
-								hls::print("abstream reading\n");
+								//hls::print("abstream reading\n");
 							}
 						}
 					//}
