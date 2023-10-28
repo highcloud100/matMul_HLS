@@ -59,7 +59,7 @@ extern "C"
 			}
 			
 		}
-		 hls::print("ReadB\n");
+		 hls::print("ReadB end\n");
 	}
 
 	void Comp(hls::stream<DTYPE> & AStream, hls::stream<hls::vector<DTYPE, DSIZE>> & BStream, hls::stream<hls::vector<DTYPE, DSIZE>> & ABStream, int N){
@@ -105,6 +105,7 @@ extern "C"
 						for(int i=0;i<M;i++){
 							for(int jj=0;jj<M/DSIZE;jj++){ // 여기서는 write만
 								AB[((ib*M+i)*N+jb*M)/DSIZE+jj] = ABStream.read();
+								hls::print("abstream reading\n");
 							}
 						}
 					//}
