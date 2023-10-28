@@ -89,7 +89,7 @@ extern "C"
 
 
 						for(int i=0;i<M;i++){ // A에서 M번 읽음 (한 줄 읽음)
-							DTYPE Ai = AStream.read(); hls::print("Ai read\n");
+							DTYPE Ai = AStream.read(); 
 							for(int jj=0;jj<M;jj++){
 								//ABStream.write(Ai*Bj[jj]);
 								AB_block[i][jj] += Ai*Bj[jj];
@@ -97,14 +97,17 @@ extern "C"
 						}
 					}
 				}
-				for(int i=0;i<M/DSIZE;i++){
-					hls::vector<DTYPE, DSIZE> temp;
-					for(int j=0;j<DSIZE;j++){
-						temp[j] = AB_block[i][j];
-					}
-					ABStream.write(temp);
+				for(int k=0;k<M;k++){
+					for(int i=0;i<M/DSIZE;i++){
+						hls::vector<DTYPE, DSIZE> temp;
+						for(int j=0;j<DSIZE;j++){
+							temp[j] = AB_block[k][j+i*DSIZE];
+						}
+						ABStream.write(temp);
 					//hls::print("ABstream write\n");
+					}
 				}
+				
 			}
 		}
 		 hls::print("Comp end\n");
@@ -118,7 +121,7 @@ extern "C"
 						for(int i=0;i<M;i++){
 							for(int jj=0;jj<M/DSIZE;jj++){ // 여기서는 write만
 								AB[((ib*M+i)*N+jb*M)/DSIZE+jj] = ABStream.read();
-								//hls::print("abstream reading\n");
+								hls::print("abstream reading\n");
 							}
 						}
 					//}
