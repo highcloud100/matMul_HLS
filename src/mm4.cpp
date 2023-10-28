@@ -37,7 +37,7 @@ extern "C"
 					for(int i=0;i<M;i++){ // 블럭 내에서 아래로 이동
 						for(int k=0;k<M/DSIZE;k++){ // 블럭 내에서 한줄 읽기
 							AStreamWide.write(At[((ib*M+i)*N + kb*M)/DSIZE + k]);
-							hls::print("AstreamWide read\n");
+							//hls::print("AstreamWide read\n");
 						}
 					}
 				}
@@ -54,7 +54,7 @@ extern "C"
 					for(int k=0;k<M;k++){ // 블록 내에서 아래로 이동 (행)
 						for(int jj=0;jj<M/DSIZE;jj++){ // 블록 내에서 한줄 읽기
 							BStream.write(B[((kb*M+k)*N+jb*M)/DSIZE+jj]);
-							hls::print("Bstream read\n");
+							//hls::print("Bstream read\n");
 						}
 					}
 				}
@@ -73,7 +73,7 @@ extern "C"
 						hls::vector<hls::vector<DTYPE, DSIZE>, M/DSIZE> Bj;
 						for(int jj=0;jj<M/DSIZE;jj++){ // B 블록의 한줄 읽기 
 							Bj[jj] = BStream.read(); 
-							hls::print("Bj read\n");
+							//hls::print("Bj read\n");
 						}
 
 
@@ -90,7 +90,7 @@ extern "C"
 				}
 				for(int i=0;i<M/DSIZE*M;i++){
 					ABStream.write(block[i]);
-					hls::print("ABstream write\n");
+					//hls::print("ABstream write\n");
 				}
 			}
 		}
@@ -105,7 +105,7 @@ extern "C"
 						for(int i=0;i<M;i++){
 							for(int jj=0;jj<M/DSIZE;jj++){ // 여기서는 write만
 								AB[((ib*M+i)*N+jb*M)/DSIZE+jj] = ABStream.read();
-								hls::print("abstream reading\n");
+								//hls::print("abstream reading\n");
 							}
 						}
 					//}
