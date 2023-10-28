@@ -67,32 +67,42 @@ extern "C"
 	void Comp(hls::stream<DTYPE> & AStream, hls::stream<hls::vector<DTYPE, DSIZE>> & BStream, hls::stream<hls::vector<DTYPE, DSIZE>> & ABStream, int N){
 		for(int ib=0;ib < N/M;ib++){ // 블럭 오른쪽으로 이동
 			for(int jb=0;jb <N/M;jb++){ // 블럭 아래로 이동
-				hls::vector<hls::vector<DTYPE, DSIZE>, M/DSIZE*M> block;
-				memset(block, 0, sizeof(block));
+				DTYPE AB_block[M][M];
+				for(int i=0;i<M;i++){
+					for(int j=0;j<M;j++){
+						AB_block[i][j] = 0;
+					}
+				}
 				
+
  				for(int kb=0;kb< N/M;kb++){ // 중복
 					for(int k=0;k<M;k++){ // 블럭 내에서 아래로 이동
-						hls::vector<hls::vector<DTYPE, DSIZE>, M/DSIZE> Bj;
+						DTYPE Bj[M];
 
 						for(int jj=0;jj<M/DSIZE;jj++){ // B 블록의 한줄 읽기 
-							Bj[jj] = BStream.read(); 
+							auto temp = BStream.read(); 
+							for(int j=0;j<DSIZE;j++){
+								Bj[j+jj*DSIZE] = temp[j];
+							}
 							//hls::print("Bj read\n");
 						}
 
 
 						for(int i=0;i<M;i++){ // A에서 M번 읽음 (한 줄 읽음)
 							DTYPE Ai = AStream.read(); hls::print("Ai read\n");
-							for(int jj=0;jj<M/DSIZE;jj++){
+							for(int jj=0;jj<M;jj++){
 								//ABStream.write(Ai*Bj[jj]);
-								block[k*M+jj] += Ai*Bj[jj];
+								AB_block[i][jj] += Ai*Bj[jj];
 							}
 						}
 					}
-
-					
 				}
-				for(int i=0;i<M/DSIZE*M;i++){
-					ABStream.write(block[i]);
+				for(int i=0;i<M/DSIZE;i++){
+					hls::vector<DTYPE, DSIZE> temp;
+					for(int j=0;j<DSIZE;j++){
+						temp[j] = AB_block[i][j];
+					}
+					ABStream.write(temp);
 					//hls::print("ABstream write\n");
 				}
 			}
