@@ -67,7 +67,7 @@ extern "C"
 	void Comp(hls::stream<DTYPE> & AStream, hls::stream<hls::vector<DTYPE, DSIZE>> & BStream, hls::stream<hls::vector<DTYPE, DSIZE>> & ABStream, int N){
 		for(int ib=0;ib < N/M;ib++){ // 블럭 오른쪽으로 이동
 			for(int jb=0;jb <N/M;jb++){ // 블럭 아래로 이동
-				hls::vector<hls::vector<DTYPE, DSIZE>, M/DSIZE*M> block(0);
+				hls::vector<hls::vector<DTYPE, DSIZE>, M/DSIZE*M> block;
  				for(int kb=0;kb< N/M;kb++){ // 중복
 					for(int k=0;k<M;k++){ // 블럭 내에서 아래로 이동
 						hls::vector<hls::vector<DTYPE, DSIZE>, M/DSIZE> Bj;
