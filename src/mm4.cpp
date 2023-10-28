@@ -27,7 +27,7 @@ extern "C"
 					}
 				}
 			}
-			 hls::print("changeA_rate end\n");
+			// hls::print("changeA_rate end\n");
 		}
 
 	void ReadAt( hls::vector<DTYPE, DSIZE> *At, hls::stream<hls::vector<DTYPE, DSIZE>> & AStreamWide, int N){
@@ -44,7 +44,7 @@ extern "C"
 			}
 			
 		}
-		 hls::print("ReadAt end\n");
+		// hls::print("ReadAt end\n");
 	}
 
 	void ReadB(hls::vector<DTYPE, DSIZE> *B, hls::stream<hls::vector<DTYPE, DSIZE>> & BStream, int N){
@@ -61,7 +61,7 @@ extern "C"
 			}
 			
 		}
-		 hls::print("ReadB end\n");
+		// hls::print("ReadB end\n");
 	}
 
 	void Comp(hls::stream<DTYPE> & AStream, hls::stream<hls::vector<DTYPE, DSIZE>> & BStream, hls::stream<hls::vector<DTYPE, DSIZE>> & ABStream, int N){
@@ -110,7 +110,7 @@ extern "C"
 				
 			}
 		}
-		 hls::print("Comp end\n");
+		 //hls::print("Comp end\n");
 	}
 
 	void WriteAB(hls::stream<hls::vector<DTYPE, DSIZE>> & ABStream, hls::vector<DTYPE, DSIZE> *AB, int N){
@@ -128,7 +128,7 @@ extern "C"
 				//}
 			}
 		}
-		 hls::print("writeAB end\n");
+		// hls::print("writeAB end\n");
 	}
 
 	void mm( hls::vector<DTYPE, DSIZE> *At, hls::vector<DTYPE, DSIZE> *B, hls::vector<DTYPE, DSIZE> *AB, int N)
@@ -144,7 +144,7 @@ extern "C"
 	hls::stream<hls::vector<DTYPE, DSIZE> > BStream("BStream");
 	hls::stream<hls::vector<DTYPE, DSIZE> > ABStream("ABStream");
 
-	hls::print("mm start\n");
+	//hls::print("mm start\n");
 	ReadAt(At, AStreamWide, N);
 	ChangeA_Rate(AStreamWide, AStream, N);
 	ReadB(B, BStream, N);
