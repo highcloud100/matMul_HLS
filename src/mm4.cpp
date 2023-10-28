@@ -2,7 +2,7 @@
 #include "hls_stream.h"
 #include "ap_int.h"
 #include "mm.h"
-#include "hls_print.h"
+//#include "hls_print.h"
 
 const int DSIZE = 64 / sizeof(DTYPE);
 
