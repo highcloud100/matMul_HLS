@@ -92,7 +92,7 @@ extern "C"
 
 						for(int i=0;i<M;i++){ // A에서 M번 읽음 (한 줄 읽음)
 							DTYPE Ai = AStream.read(); 
-							for(int jj=0;jj<M/DISIZE;j++){
+							for(int jj=0;jj<M/DISIZE;jj++){
 #pragma HLS PIPELINE
 								auto temp = BStream.read();
 								for(int j=0;j<DSIZE;j++){
