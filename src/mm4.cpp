@@ -79,31 +79,25 @@ extern "C"
 
  				for(int kb=0;kb< N/M;kb++){ // 중복
 					for(int k=0;k<M;k++){ // 블럭 내에서 아래로 이동
-						//DTYPE Bj[M];
+						DTYPE Bj[M];
 
-						// for(int jj=0;jj<M/DSIZE;jj++){ // B 블록의 한줄 읽기 
-						// 	auto temp = BStream.read(); 
-						// 	for(int j=0;j<DSIZE;j++){
-						// 		Bj[j+jj*DSIZE] = temp[j];
-						// 	}
-						// 	//hls::print("Bj read\n");
-						// }
+						for(int jj=0;jj<M/DSIZE;jj++){ // B 블록의 한줄 읽기 
+							auto temp = BStream.read(); 
+#pragma HLS PIPELINE
+							for(int j=0;j<DSIZE;j++){
+								Bj[j+jj*DSIZE] = temp[j];
+							}
+							//hls::print("Bj read\n");
+						}
 
 
 						for(int i=0;i<M;i++){ // A에서 M번 읽음 (한 줄 읽음)
 							DTYPE Ai = AStream.read(); 
-							for(int jj=0;jj<M/DSIZE;jj++){
 #pragma HLS PIPELINE
-								auto temp = BStream.read();
-								for(int j=0;j<DSIZE;j++){
-									AB_block[i][jj*DSIZE+j] += Ai*temp[j];
-								}
+							for(int jj=0;jj<M;jj++){
+								//ABStream.write(Ai*Bj[jj]);
+								AB_block[i][jj] += Ai*Bj[jj];
 							}
-
-							// for(int jj=0;jj<M;jj++){
-							// 	//ABStream.write(Ai*Bj[jj]);
-							// 	AB_block[i][jj] += Ai*Bj[jj];
-							// }
 						}
 					}
 				}
