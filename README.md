@@ -1,3 +1,4 @@
 # matMul_HLS
 
-change directory name to mm or edit Makefile
+mm4 : data flow code
+mm1 : block, bandwidth inc
