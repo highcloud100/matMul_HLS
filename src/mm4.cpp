@@ -15,10 +15,10 @@ extern "C"
 				for(int jb=0;jb< N/M; jb++){
 					for(int kb = 0;kb < N/M;kb++){
 						for(int k=0;k<M;k++){
-							
 							for(int ii=0;ii <M/DSIZE;ii++){ // M size의 배열이 필요하기에 m/DSIZE만큼 반복
 								hls::vector<DTYPE, DSIZE> A_temp = AStreamWide.read();
 								for(int i=0;i<DSIZE;i++){
+#pragma HLS PIPELINE
 									AStream.write(A_temp[i]);
 								}
 							}
@@ -36,6 +36,7 @@ extern "C"
 				for(int ib=0;ib< N/M; ib++){ // 블럭 아래로 하나씩 
 					for(int i=0;i<M;i++){ // 블럭 내에서 아래로 이동
 						for(int k=0;k<M/DSIZE;k++){ // 블럭 내에서 한줄 읽기
+#pragma HLS PIPELINE
 							AStreamWide.write(At[((ib*M+i)*N + kb*M)/DSIZE + k]);
 							//hls::print("AstreamWide read\n");
 						}
@@ -53,6 +54,7 @@ extern "C"
 				for(int kb=0;kb<N/M;kb++){ // 아래로 이동 (블록)
 					for(int k=0;k<M;k++){ // 블록 내에서 아래로 이동 (행)
 						for(int jj=0;jj<M/DSIZE;jj++){ // 블록 내에서 한줄 읽기
+#pragma HLS PIPELINE
 							BStream.write(B[((kb*M+k)*N+jb*M)/DSIZE+jj]);
 							//hls::print("Bstream read\n");
 						}
@@ -77,28 +79,37 @@ extern "C"
 
  				for(int kb=0;kb< N/M;kb++){ // 중복
 					for(int k=0;k<M;k++){ // 블럭 내에서 아래로 이동
-						DTYPE Bj[M];
+						//DTYPE Bj[M];
 
-						for(int jj=0;jj<M/DSIZE;jj++){ // B 블록의 한줄 읽기 
-							auto temp = BStream.read(); 
-							for(int j=0;j<DSIZE;j++){
-								Bj[j+jj*DSIZE] = temp[j];
-							}
-							//hls::print("Bj read\n");
-						}
+						// for(int jj=0;jj<M/DSIZE;jj++){ // B 블록의 한줄 읽기 
+						// 	auto temp = BStream.read(); 
+						// 	for(int j=0;j<DSIZE;j++){
+						// 		Bj[j+jj*DSIZE] = temp[j];
+						// 	}
+						// 	//hls::print("Bj read\n");
+						// }
 
 
 						for(int i=0;i<M;i++){ // A에서 M번 읽음 (한 줄 읽음)
 							DTYPE Ai = AStream.read(); 
-							for(int jj=0;jj<M;jj++){
-								//ABStream.write(Ai*Bj[jj]);
-								AB_block[i][jj] += Ai*Bj[jj];
+							for(int jj=0;jj<M/DISIZE;j++){
+#pragma HLS PIPELINE
+								auto temp = BStream.read();
+								for(int j=0;j<DSIZE;j++){
+									AB_block[i][jj*DSIZE+j] += Ai*temp[j];
+								}
 							}
+
+							// for(int jj=0;jj<M;jj++){
+							// 	//ABStream.write(Ai*Bj[jj]);
+							// 	AB_block[i][jj] += Ai*Bj[jj];
+							// }
 						}
 					}
 				}
 				for(int k=0;k<M;k++){
 					for(int i=0;i<M/DSIZE;i++){
+#pragma HLS PIPELINE
 						hls::vector<DTYPE, DSIZE> temp;
 						for(int j=0;j<DSIZE;j++){
 							temp[j] = AB_block[k][j+i*DSIZE];
@@ -120,6 +131,7 @@ extern "C"
 					//for(int k=0;k<M;k++){ // ?
 						for(int i=0;i<M;i++){
 							for(int jj=0;jj<M/DSIZE;jj++){ // 여기서는 write만
+#pragma HLS PIPELINE
 								AB[((ib*M+i)*N+jb*M)/DSIZE+jj] = ABStream.read();
 								//hls::print("abstream reading\n");
 							}
